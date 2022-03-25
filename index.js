@@ -48,15 +48,15 @@ client.on('message', async (message) => {
 
     if(message.content === `${config.prefix}force-update`){
         if (!message.member.hasPermission('MANAGE_MESSAGES')) {
-            return message.channel.send('Only server moderators can run this command!')
+            return message.channel.send('Só moderadores podem usar esse comando!')
         }
-        const sentMessage = await message.channel.send("Updating the channels, please wait...")
+        const sentMessage = await message.channel.send("Atualizando os canais...")
         await updateChannel()
         sentMessage.edit("Channels were updated successfully!")
     }
 
     if(message.content === `${config.prefix}stats`){
-        const sentMessage = await message.channel.send("Fetching statistics, please wait...")
+        const sentMessage = await message.channel.send("Procurando dados...")
 
         // Fetch statistics from mcapi.us
         const res = await fetch(`https://mcapi.us/server/status?ip=${config.ipAddress}${config.port ? `&port=${config.port}` : ''}`)
@@ -70,14 +70,14 @@ client.on('message', async (message) => {
             .setAuthor(config.ipAddress)
             .attachFiles(attachment)
             .setThumbnail("attachment://icon.png")
-            .addField("Version", body.server.name)
-            .addField("Connected", `${body.players.now} players`)
-            .addField("Maximum", `${body.players.max} players`)
+            .addField("Versão", body.server.name)
+            .addField("Conectados", `${body.players.now} players`)
+            .addField("Máximo", `${body.players.max} players`)
             .addField("Status", (body.online ? "Online" : "Offline"))
             .setColor("#FF0000")
-            .setFooter("Open Source Minecraft Discord Bot")
+            .setFooter("github.com/guincky")
         
-        sentMessage.edit(`:chart_with_upwards_trend: Here are the stats for **${config.ipAddress}**:`, { embed })
+        sentMessage.edit(`:chart_with_upwards_trend: Aqui as informações de: **${config.ipAddress}**:`, { embed })
     }
 
 })
